@@ -26,7 +26,7 @@ model = load_model('yolo-coco/inceptionv3.h5')
 
 #args = ap.parse_args()
 # Define Streamlit app
-model = load_model('/Users/shikha/PycharmProjects/pythonProject/human-detection/model_inception.h5')
+#model = load_model('/Users/shikha/PycharmProjects/pythonProject/human-detection/model_inception.h5')
 def get_output_layers(net):
     layer_names = net.getLayerNames()
     try:
