@@ -8,16 +8,23 @@ from tensorflow.keras.preprocessing.image import load_img
 import streamlit as st
 from keras.models import load_model
 
-ap = argparse.ArgumentParser()
+training_weight_url="https://drive.google.com/uc?id=1XPppB5-oC-9OR4hV9okFZynlSceQ84we"
 
-ap.add_argument('-c', '--config', required=True,
-                help='path to yolo config file')
-ap.add_argument('-w', '--weights', required=True,
-                help='path to yolo pre-trained weights')
-ap.add_argument('-cl', '--classes', required=True,
-                help='path to text file containing class names')
+url = 'https://pjreddie.com/media/files/yolov3.weights'
+if not os.path.exists("yolo-coco/yolov3.weights"):
+    print("weights_path_insde")
+    response = requests.get(url)
+    if response.status_code == 200:
+        # Save the file to disk
+        with open('yolo-coco/yolov3.weights', 'wb') as f:
+            f.write(response.content)
+if not os.path.exists("yolo-coco/inceptionv3.h5"):
+    output='yolo-coco/inceptionv3.h5'
+    gdown.download(training_weight_url,output,quiet=False)
 
-args = ap.parse_args()
+model = load_model('yolo-coco/inceptionv3.h5')
+
+#args = ap.parse_args()
 # Define Streamlit app
 model = load_model('/Users/shikha/PycharmProjects/pythonProject/human-detection/model_inception.h5')
 def get_output_layers(net):
@@ -92,14 +99,14 @@ def detect_persons(image):
     print(image.shape,args.weights,args.config)
     # Load classes
     classes = None
-    with open(args.classes, 'r') as f:
+    with open('yolo-coco/yolov3.txt, 'r') as f:
         classes = [line.strip() for line in f.readlines()]
 
     # Generate random colors for each class
     COLORS = np.random.uniform(0, 255, size=(len(classes), 3))
 
     # Load YOLO model
-    net = cv2.dnn.readNet(args.weights, args.config)
+    net = cv2.dnn.readNet('yolo-coco/yolov3.weights','yolo-coco/yolov3.cfg')
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     Width = image.shape[1]
     Height = image.shape[0]
