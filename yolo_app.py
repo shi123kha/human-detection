@@ -99,7 +99,7 @@ def detect_persons(image):
     print(image.shape,args.weights,args.config)
     # Load classes
     classes = None
-    with open('yolo-coco/yolov3.txt, 'r') as f:
+    with open('yolo-coco/yolov3.txt', 'r') as f:
         classes = [line.strip() for line in f.readlines()]
 
     # Generate random colors for each class
