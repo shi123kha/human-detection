@@ -14,4 +14,4 @@ ADD requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 WORKDIR /app
 COPY . ./
-ENTRYPOINT ["streamlit", "run", "yolo_app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "StreamLiteApp.py", "--server.port=8080", "--server.address=0.0.0.0"]
